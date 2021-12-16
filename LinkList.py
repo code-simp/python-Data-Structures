@@ -150,32 +150,79 @@ class LinkList:
             cur_node = cur_node.next
         print(dup)
 
+    def nth_to_last(self,input):
+        cur_node = self.head
+        count = 0
+        incr=0
+        while cur_node:
+            count+=1
+            if count > input:
+                incr+=1
+            cur_node = cur_node.next
+        return incr
+
+    def move_tail_to_head(self):
+        cur_node = self.head
+        while cur_node.next:
+            if cur_node.next.next == None:
+                this = cur_node
+            cur_node = cur_node.next
+        cur_node.next = self.head
+        self.head = cur_node
+        this.next = None
+
+    def sum_two_lists(self, llist):
+        result = LinkList()
+        pointer1 = self.head
+        pointer2 = llist.head
+
+        if self.length() > llist.length():
+            while llist.length() != self.length():
+                llist.append(0)
+
+        if self.length() < llist.length():
+            while self.length() != llist.length():
+                self.append(0)
+
+        while pointer1!=None and pointer2 != None:
+            sum = pointer1.data + pointer2.data
+            if sum >= 10:
+                remain = sum - 10
+                pointer2.next.data += 1
+                result.append(remain)
+            else:
+                result.append(sum)
+            pointer1 = pointer1.next
+            pointer2 = pointer2.next    
+            
+        return result
+
+    def pairs_with_sum(self, sum_val):  
+        result = []
+        cur_node = self.head
+        while cur_node:
+            pointer1 = cur_node.data
+            p2 = cur_node
+            while p2:
+                if p2.data == sum_val - pointer1:
+                    result.append('(' + str(pointer1)+','+ str(p2.data) + ')')
+                p2 = p2.next
+            cur_node = cur_node.next
+        return result
+
 
 
 list1 = LinkList()
-list1.append(20)
-list1.append(22)
-list1.append(24)    
-list1.append(26) 
-list1.append(28) 
-list1.append(29) 
-list1.append(30) 
+list1.append(4)
+list1.append(9)    
 
 
 list2 = LinkList()
-list2.append(21)
-list2.append(21)
-list2.append(23)
-list2.append(25)    
-list2.append(27) 
-list2.append(27) 
-list2.append(27) 
-list2.append(27) 
 
-list2.output()
-print('*     -    *')
-list2.remove_duplicate()
-list2.output()
+list3 = LinkList()
+
+list3 = list2.sum_two_lists(list1)
+list3.output()
 
 
 
